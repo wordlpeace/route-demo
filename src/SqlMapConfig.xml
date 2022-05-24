@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--数据库的环境配置-->
+<configuration>
+
+    <!--先引入properties配置文件-->
+    <properties resource="jdbc.properties"></properties>
+
+    <!--配置类型的别名-->
+    <typeAliases>
+            <package name="com.itheima.domain"></package>
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql"/>
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+<!--    <plugins>-->
+<!--        <plugin interceptor="com.github.pagehelper.PageInterceptor">-->
+<!--            <property name="autoRuntimeDialect" value="true"/>-->
+<!--        </plugin>-->
+<!--    </plugins>-->
+
+    <!--default:默认使用哪个标识的数据库-->
+    <environments default="mysql">
+
+        <environment id="mysql">
+            <transactionManager type="jdbc"/>
+            <!--数据源
+                      取值：POOLED 告诉mybatis使用连接池 （内置的连接池）
+            -->
+            <dataSource type="POOLED">
+                <!--使用properties的值-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--引入映射文件-->
+        <package name="com.itheima.dao"></package>
+    </mappers>
+</configuration>
